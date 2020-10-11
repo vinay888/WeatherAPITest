@@ -1,17 +1,18 @@
 package TestCases;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.testng.annotations.Test;
 
-import APIClasses.FileandEnv;
+import APIClasses.APIHandler;
+import APIClasses.WeatherAPIBuilder;
 import ObjectRepository.HomePage;
 import ObjectRepository.WeatherPage;
-import UtilityClasses.ReadAPIConfig;
+import Resources.VARIANCE_TYPES;
 import UtilityClasses.TestBaseClass;
 import UtilityClasses.Weather;
-import io.restassured.RestAssured;
+import UtilityClasses.WeatherComparator;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+
 
 public class WeatherTests extends TestBaseClass
 {
@@ -46,19 +47,29 @@ public class WeatherTests extends TestBaseClass
 		WeatherPage.getInstance().clickOnCityOnMap();
 		Weather uiWeather = WeatherPage.getInstance().getUIWeatherObject();	
 		
-		RestAssured.baseURI = ReadAPIConfig.getInstance().getConfig("BASE_URL");
-		Response response = RestAssured.given()
-					.param("city name", WeatherPage.getInstance().getCurrentCity())
-					.param("API key", ReadAPIConfig.getInstance().getConfig("API_KEY"))
-					.when().get();
-		JSONArray array = new JSONArray(response.getBody().asString());
+		WeatherAPIBuilder.setCurrentCity("Pune");
+		//IApiBuilder builder = new WeatherAPIBuilder();
+		//builder.buildAPIParameters();
 		
-		for(int i=0; i<array.length();i++) 
-		{
-			//System.out.println(array.get(i));
-			
-			//JSONObject obj = array.getJSONObject(i);
-			//System.out.println(obj.get("title"));
-		}
+		Response response = APIHandler.getRequestResponse(new WeatherAPIBuilder());
+		
+		JsonPath jsonPathEvaluator = response.jsonPath();
+		
+		double temp = Double.parseDouble(jsonPathEvaluator.get("main.temp").toString());
+		double humidity = Double.parseDouble(jsonPathEvaluator.get("main.humidity").toString());
+		double windSpeed = Double.parseDouble(jsonPathEvaluator.get("wind.speed").toString());
+		
+		Weather apiWeather = new Weather(temp, windSpeed, humidity);
+		
+		WeatherComparator comp = new WeatherComparator();
+		comp.setVarianceType(VARIANCE_TYPES.HIGH);
+		int result = comp.compare(uiWeather, apiWeather);
+		
+		if(result == 0)
+			System.out.println("Weather details on API and UI are same");
+		else if(result == 1)
+			System.out.println("Weather details on API and UI are within variance. Variance Type is : ");
+		else
+			System.out.println("Weather details on API and UI are not within variance");
 	}
 }

@@ -22,6 +22,13 @@ public class Weather
 		}
 	}
 	
+	public Weather(double temperature, double windSpeed, double humidity)
+	{
+		this.temperature = temperature;
+		this.windSpeed = windSpeed;
+		this.humidity = humidity;
+	}
+	
 	public double getTemperature()
 	{
 		return temperature;
@@ -40,7 +47,8 @@ public class Weather
 	
 	private void setwindSpeed(String windString)
 	{
-		windString = windString.split(":")[1].trim().split(" ")[0].trim();
+		String[] windStringArr = windString.trim().split(" ");
+		windString = windStringArr[windStringArr.length - 2].trim();
 		windSpeed = Double.parseDouble(windString);
 	}
 	
