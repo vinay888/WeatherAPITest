@@ -8,9 +8,9 @@ Tool Stack Used -
 * Java - 8
 * Eclipse IDE
 
-<B> Steps to inport and run project in Ecipse </B>
+<B> Steps to import and run project in Ecipse </B>
 * Open eclipse
-* Go to File -> Import and select Git -> Projects frm Git
+* Go to File -> Import and select Git -> Projects from Git
 * Select Clone URIand enter URL as -> https://github.com/vinay888/WeatherAPITest.git
 * Also provide your github credentials
 * Follow rest of the steps in standard fashion
