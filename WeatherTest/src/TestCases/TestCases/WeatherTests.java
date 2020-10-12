@@ -3,6 +3,8 @@ package TestCases;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 import APIClasses.APIHandler;
 import APIClasses.WeatherAPIBuilder;
 import ObjectRepository.HomePage;
@@ -55,6 +57,8 @@ public class WeatherTests extends TestBaseClass
 		WeatherPage.getInstance().clickOnCityOnMap();
 		Weather uiWeather = WeatherPage.getInstance().getUIWeatherObject();	
 		
+		test.log(LogStatus.INFO, "UI Weather Object Details : Temperature - " + uiWeather.getTemperature() + ", Humidity - " + uiWeather.getHumidity() + ", WindSpeed - " + uiWeather.getwindSpeed());
+		
 		// Set current city for API
 		WeatherAPIBuilder.setCurrentCity("Pune");
 				
@@ -66,6 +70,8 @@ public class WeatherTests extends TestBaseClass
 		
 		// Create weather object from API response
 		Weather apiWeather = new Weather(response);
+		
+		test.log(LogStatus.INFO, "API Weather Object Details : Temperature - " + apiWeather.getTemperature() + ", Humidity - " + apiWeather.getHumidity() + ", WindSpeed - " + apiWeather.getwindSpeed());
 		
 		// compare UI & API weather object and print result
 		WeatherComparator comp = new WeatherComparator();
