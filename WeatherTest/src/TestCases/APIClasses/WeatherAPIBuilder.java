@@ -43,7 +43,7 @@ public class WeatherAPIBuilder implements IApiBuilder
 	public HashMap<String, String> getQueryParams()
 	{
 		HashMap<String, String> queryParams = new HashMap<String, String>();
-		queryParams.put("id", currentCity);
+		queryParams.put("q", currentCity);
 		queryParams.put("appId", ReadAPIConfig.getInstance().getConfig("WEATHER_API_KEY"));
 		queryParams.put("units", ReadAPIConfig.getInstance().getConfig("WEATHER_API_UNITS"));
 		
@@ -54,9 +54,8 @@ public class WeatherAPIBuilder implements IApiBuilder
 	public HashMap<String, String> getHeaders()
 	{
 		HashMap<String, String> headers = new HashMap<String, String>();
-		headers.put("id", currentCity);
-		headers.put("appId", ReadAPIConfig.getInstance().getConfig("WEATHER_API_KEY"));
-		headers.put("units", ReadAPIConfig.getInstance().getConfig("WEATHER_API_UNITS"));
+		headers.put("Content-Type", "ContentType.JSON");
+		headers.put("Accept", "ContentType.JSON");	
 		
 		return headers;
 	}

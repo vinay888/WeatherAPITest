@@ -30,16 +30,25 @@ public class HomePage
 	}
 	
 	/* ---------------- Element Declarations -------------------------------------------- */
+	/**
+	 * Returns sub-menu object
+	 */
 	private WebElement getSubMenu()
 	{
 		return driver.findElement(By.id(ReadLocators.getInstance().getLocator("HOME_SUB_MENU")));	  
 	}
 	
+	/**
+	 * Returns weather sub-menu object
+	 */
 	private WebElement getWeatherSubMenuElement()
 	{
 		return driver.findElement(By.linkText(ReadLocators.getInstance().getLocator("HOME_WEATHER_MENU")));	  
 	} 
 	
+	/**
+	 * Returns no link for notification alert
+	 */
 	private WebElement getNoNotificationAlert()
 	{
 		return driver.findElement(By.className(ReadLocators.getInstance().getLocator("HOME_NOTIFICATION_ALERT")));	  

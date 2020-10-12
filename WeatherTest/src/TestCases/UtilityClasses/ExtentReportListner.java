@@ -11,8 +11,8 @@ import com.relevantcodes.extentreports.LogStatus;
 
 public class ExtentReportListner  implements ITestListener
 {
-	protected static ExtentReports reports;
-	protected static ExtentTest test;
+	public static ExtentReports reports;
+	public static ExtentTest test;
 	String ReportLocation = "test-output/Report/" + resultpath + "/";
 	private static String resultpath = getResultPath();
 

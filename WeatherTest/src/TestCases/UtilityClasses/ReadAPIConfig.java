@@ -3,6 +3,8 @@ package UtilityClasses;
 import java.io.FileReader;
 import java.util.Properties;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 public class ReadAPIConfig
 {
 	private static ReadAPIConfig _instance = null;
@@ -32,7 +34,7 @@ public class ReadAPIConfig
 		}
 		catch (Exception e)
 		{
-			System.out.println("API properties file not found");
+			ExtentReportListner.test.log(LogStatus.FATAL, "API properties file not found");
 		}	    
 	}
 	
@@ -45,12 +47,12 @@ public class ReadAPIConfig
 	{
 		if(p.containsKey(key))
 		{
-			System.out.println(p.get(key));
+			//System.out.println(p.get(key));
 			return p.getProperty(key);
 		}
 		else
 		{
-			System.out.println("Key does not exist in API file : " + key);
+			ExtentReportListner.test.log(LogStatus.ERROR, "Key not found in API properties file : " + key);
 		}
 		return null;
 	}

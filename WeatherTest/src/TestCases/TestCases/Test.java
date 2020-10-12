@@ -1,11 +1,14 @@
 package TestCases;
 
-import org.json.JSONArray;
-
+import APIClasses.IApiBuilder;
+import APIClasses.WeatherAPIBuilder;
 import ObjectRepository.WeatherPage;
 import UtilityClasses.ReadAPIConfig;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class Test
 {
@@ -14,24 +17,58 @@ public class Test
 	{		
 		try
 		{
-			RestAssured.baseURI = ReadAPIConfig.getInstance().getConfig("BASE_URL");
-			Response response = RestAssured.given()
-						.param("city name", WeatherPage.getInstance().getCurrentCity())
-						.param("API key", ReadAPIConfig.getInstance().getConfig("API_KEY"))
-						.when().get();
-			JSONArray array = new JSONArray(response.getBody().asString());
+			IApiBuilder builder = new WeatherAPIBuilder();
+			/*RestAssured.baseURI = ReadAPIConfig.getInstance().getConfig("BASE_URL") 
+					+ ReadAPIConfig.getInstance().getConfig("WEATHER_API_BASE_PATH");		
 			
-			for(int i=0; i<array.length();i++) 
-			{
-				//System.out.println(array.get(i));
-				
-				//JSONObject obj = array.getJSONObject(i);
-				//System.out.println(obj.get("title"));
-			}
+			WeatherPage.getInstance().setCurrentCity("Pune");
+			
+			Response response = RestAssured.given()
+												.headers("Content-Type", "ContentType.JSON", "Accept", "ContentType.JSON")
+												
+												.param("q", WeatherPage.getInstance().getCurrentCity())
+												.param("appId", ReadAPIConfig.getInstance().getConfig("WEATHER_API_KEY"))
+												.param("units", "imperial")
+											.when()
+												.get()
+											.then()
+												.contentType(ContentType.JSON).extract().response();
+			
+			System.out.println(response.getBody().asString());
+			
+			JsonPath jsonPathEvaluator = response.jsonPath();
+			
+			System.out.println(jsonPathEvaluator.get("main.temp").toString());
+			System.out.println(jsonPathEvaluator.get("main.humidity").toString());
+			System.out.println(jsonPathEvaluator.get("wind.speed").toString());*/
+			
+			RestAssured.baseURI = builder.getEndpoint() + builder.getBasePath();	
+			
+			WeatherPage.getInstance().setCurrentCity("Pune");
+			WeatherAPIBuilder.setCurrentCity("Pune");
+			Response response = RestAssured.given()
+												.headers(builder.getHeaders())												
+												.params(builder.getQueryParams())												
+											.when()
+												.get()
+											.then()
+												.contentType(ContentType.JSON).extract().response();
+			
+			System.out.println(response.getBody().asString());
+			
+			JsonPath jsonPathEvaluator = response.jsonPath();
+			
+			System.out.println(jsonPathEvaluator.get("main.temp").toString());
+			System.out.println(jsonPathEvaluator.get("main.humidity").toString());
+			System.out.println(jsonPathEvaluator.get("wind.speed").toString());
+			
+			
+			
+			
 		}
 		catch (Exception e)
 		{
-			System.out.println("Locators file not found");
+			e.printStackTrace();
 		}	 
 	}
 

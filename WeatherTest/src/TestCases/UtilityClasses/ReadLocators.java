@@ -3,6 +3,8 @@ package UtilityClasses;
 import java.io.FileReader;
 import java.util.Properties;
 
+import com.relevantcodes.extentreports.LogStatus;
+
 
 public class ReadLocators
 {
@@ -33,7 +35,7 @@ public class ReadLocators
 		}
 		catch (Exception e)
 		{
-			System.out.println("Locators file not found");
+			ExtentReportListner.test.log(LogStatus.ERROR, "Locators file not found");
 		}	    
 	}
 	
@@ -48,7 +50,7 @@ public class ReadLocators
 			return p.getProperty(key);
 		else
 		{
-			System.out.println("Key does not exist in locator file : " + key);
+			ExtentReportListner.test.log(LogStatus.ERROR, "Key not found in locators properties file : " + key);
 		}
 		return null;
 	}
