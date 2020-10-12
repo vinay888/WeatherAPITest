@@ -19,13 +19,15 @@ Tool Stack Used -
 * No error should be visible in the project
 
 <B> How to run </B>
-Assumption : TestNG plug-in is already installed in Eclipse
+
+<I>Assumption</I> : TestNG plug-in is already installed in Eclipse
 * Go to location - \src\TestCases\TestCases\WeatherTests.java
 * Click on Run button from menu bar
 
 <B> Checking Report </B>
+
 Report is stored at below location in project ->
-\WeatherTest\test-output\Report\test\ExtentReport.html
+<I>\WeatherTest\test-output\Report\test\ExtentReport.html</I>
 
 <B> Enhancements that can be done </B>
 * Integrate data from external source like Excel, xml, csv etc. for API and UI Tests
@@ -37,5 +39,6 @@ Report is stored at below location in project ->
 * API parameters, headers etc. are hard-coded. No external file integration yet.
 
 <B> Extensions </B>
+
 Please feel free to enhance it or ask question for anything.
-Email - kumar.vinay888@gmail.com
+<I>Email</I> - kumar.vinay888@gmail.com
